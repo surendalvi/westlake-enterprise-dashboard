@@ -1,4 +1,6 @@
 services:
-  - type: static
+  - type: web
     name: westlake-enterprise-dashboard
+    env: static
+    buildCommand: ""
     staticPublishPath: .
