@@ -1,0 +1,24 @@
+# Render.com Infrastructure as Code Blueprint
+# https://render.com/docs/blueprint-spec
+
+services:
+  # Option 1: Render Static Site (Free Tier, Fast CDN Deployment)
+  - type: static
+    name: westlake-enterprise-dashboard
+    env: static
+    buildCommand: ""
+    publishDir: "."
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # Option 2: Render Python Web Service
+  - type: web
+    name: westlake-dashboard-service
+    env: python
+    buildCommand: ""
+    startCommand: python server.py
+    envVars:
+      - key: PORT
+        value: 8080

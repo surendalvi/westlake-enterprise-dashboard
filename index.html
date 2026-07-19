@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Westlake Corporation - Process Efficiency & Asset Metric Hub (Ingenero)</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- COLLAPSIBLE LEFT SIDEBAR -->
+    <aside id="sidebar" class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2L2 9L16 16L30 9L16 2Z" fill="#FF6B00"/>
+            <path d="M2 23L16 30L30 23V16L16 23L2 16V23Z" fill="#F97316"/>
+            <path d="M2 16L16 23L30 16L16 9L2 16Z" fill="#10B981" fill-opacity="0.6"/>
+          </svg>
+          <span class="sidebar-item-text">INGENERO</span>
+        </div>
+        <button class="sidebar-toggle-btn" onclick="window.app.toggleSidebar()" title="Toggle Navigation Sidebar">
+          ☰
+        </button>
+      </div>
+
+      <div class="sidebar-menu">
+        
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Overview</div>
+          <div id="navExec" class="sidebar-item active" onclick="window.app.switchModule('exec', 'enterprise')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <span class="sidebar-item-text">Executive Opportunity</span>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Module 1</div>
+          <div id="navMod1" class="sidebar-item" onclick="window.app.switchModule('module1', 'enterprise')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span class="sidebar-item-text">Process & Energy Hub</span>
+          </div>
+          <div id="navMod1Site" class="sidebar-item sidebar-subitem" onclick="window.app.switchModule('module1', 'site')">
+            <span style="color:var(--text-muted);">└</span>
+            <span class="sidebar-item-text">Site Breakdown</span>
+          </div>
+          <div id="navMod1Asset" class="sidebar-item sidebar-subitem" onclick="window.app.switchModule('module1', 'asset')">
+            <span style="color:var(--text-muted);">└</span>
+            <span class="sidebar-item-text">Process Asset Deep-Dive</span>
+          </div>
+        </div>
+
+        <div class="sidebar-group">
+          <div class="sidebar-group-label">Module 2</div>
+          <div id="navMod2" class="sidebar-item" onclick="window.app.switchModule('module2', 'enterprise')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span class="sidebar-item-text">Asset Metric Hub (AMH)</span>
+          </div>
+          <div id="navMod2Site" class="sidebar-item sidebar-subitem" onclick="window.app.switchModule('module2', 'site')">
+            <span style="color:var(--text-muted);">└</span>
+            <span class="sidebar-item-text">AMH Site Breakdown</span>
+          </div>
+          <div id="navMod2Asset" class="sidebar-item sidebar-subitem" onclick="window.app.switchModule('module2', 'asset')">
+            <span style="color:var(--text-muted);">└</span>
+            <span class="sidebar-item-text">AMH Asset Deep-Dive</span>
+          </div>
+        </div>
+
+        <div class="sidebar-group" style="margin-top:auto;">
+          <div class="sidebar-group-label">Pitch</div>
+          <div class="sidebar-item" onclick="window.app.openPitchModal()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            <span class="sidebar-item-text">Sales Proposal & ROI</span>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP EXECUTIVE HEADER WITH THEME TOGGLE -->
+      <header class="app-header">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="font-family:var(--font-display); font-size:1.35rem; font-weight:800; color:var(--text-primary);">
+            WESTLAKE <span style="color:var(--accent-orange); font-weight:600; font-size:1.1rem;">CORPORATION</span>
+          </div>
+          <span style="background:rgba(255,107,0,0.15); border:1px solid var(--accent-orange); color:var(--accent-orange); font-size:0.7rem; font-weight:800; padding:0.2rem 0.6rem; border-radius:var(--radius-sm); text-transform:uppercase;">
+            Ingenero Physics-AI Architecture
+          </span>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <!-- THEME TOGGLE BUTTON -->
+          <button id="themeToggleBtn" class="theme-toggle-btn" onclick="window.app.toggleTheme()">
+            <span id="themeToggleIcon">🌙</span> <span id="themeToggleLabel">Dark Theme</span>
+          </button>
+
+          <select id="siteSelect" class="site-selector" onchange="window.app.handleSiteChange(this.value)">
+            <option value="all">All Target Sites (4 Complex Sites)</option>
+            <option value="calvert">Calvert City Complex (KY)</option>
+            <option value="lacc">LACC Ethylene (LA)</option>
+            <option value="petro1">Petro 1 Olefins (LA)</option>
+            <option value="petro2">Petro 2 Olefins (LA)</option>
+          </select>
+
+          <button class="btn-pitch" onclick="window.app.openPitchModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            Proposal & Value Pitch
+          </button>
+        </div>
+      </header>
+
+      <!-- SUB NAVIGATION BAR (BREADCRUMBS & SCOPE SWITCHER) -->
+      <nav class="nav-sub-bar">
+        <div class="breadcrumbs" id="breadcrumbTrail">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <div class="scope-switch-buttons">
+          <button id="scopeEnterpriseBtn" class="scope-btn active" onclick="window.app.setScope('enterprise')">
+            Enterprise Wide
+          </button>
+          <button id="scopeSiteBtn" class="scope-btn" onclick="window.app.setScope('site')">
+            Site Wise
+          </button>
+          <button id="scopeAssetBtn" class="scope-btn" onclick="window.app.setScope('asset')">
+            Asset Wise
+          </button>
+        </div>
+      </nav>
+
+      <!-- MAIN VIEW CONTENT -->
+      <main class="main-content">
+
+        <!-- ===================================================================
+             EXECUTIVE OVERVIEW (Total Opportunity)
+             =================================================================== -->
+        <section id="viewExec" class="view-section">
+          
+          <!-- HERO OPPORTUNITY BANNER (MM$) -->
+          <div class="hero-opportunity-banner">
+            <div>
+              <div class="opp-hero-title">Total Realizable Enterprise Opportunity</div>
+              <div class="opp-hero-value">$5.24 MM / yr</div>
+              <div class="opp-hero-subtitle">
+                Calculated real-time financial & operational upside across Westlake Olefins fleet (Calvert, LACC, Petro 1 & Petro 2).
+                Equivalent to <strong>$0.01435 MM / day</strong> ($14,356/day) in realizable margin recovery.
+              </div>
+            </div>
+
+            <div class="opp-card-breakup module-1" onclick="window.app.switchModule('module1', 'enterprise')">
+              <div class="opp-breakup-label">
+                <span>Process & Energy Module</span>
+                <span style="color:var(--accent-orange);">Module 1 ➔</span>
+              </div>
+              <div class="opp-breakup-val">$3.12 MM / yr</div>
+              <div class="opp-breakup-sub">$0.00855 MM / day (59.5% of total opp)</div>
+            </div>
+
+            <div class="opp-card-breakup module-2" onclick="window.app.switchModule('module2', 'enterprise')">
+              <div class="opp-breakup-label">
+                <span>Asset Metric Hub (AMH)</span>
+                <span style="color:var(--accent-emerald);">Module 2 ➔</span>
+              </div>
+              <div class="opp-breakup-val">$2.12 MM / yr</div>
+              <div class="opp-breakup-sub">$0.00580 MM / day (40.5% of total opp)</div>
+            </div>
+          </div>
+
+          <!-- INGENERO HYBRID PHYSICS-AI MODEL SUITE -->
+          <div style="margin-bottom:1.5rem;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem;">
+              <span>🧠 Ingenero Physics-Informed AI/ML Model Suite</span>
+              <span style="background:rgba(16,185,129,0.15); color:var(--accent-emerald); font-size:0.7rem; padding:0.15rem 0.5rem; border-radius:var(--radius-sm); border:1px solid rgba(16,185,129,0.3);">All 5 Hybrid Models Online</span>
+            </div>
+
+            <div id="aiModelsGrid" class="ai-models-grid">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- EXECUTIVE REFERENCE KPIS GRID WITH TOOLTIPS -->
+          <div class="kpi-banner-grid">
+            <div class="kpi-stat-card" style="--card-border-color: var(--accent-orange);">
+              <div class="kpi-stat-label">
+                Process Efficiency Score
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('ECI')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--accent-orange);">99.1%</div>
+              <div class="kpi-stat-sub">Optimized online fleet performance</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--accent-emerald);">
+              <div class="kpi-stat-label">
+                Maintenance Cost Effectiveness
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('ECI')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--accent-emerald);">94.2%</div>
+              <div class="kpi-stat-sub">AMH First Quartile Index</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-lacc);">
+              <div class="kpi-stat-label">
+                Critical Asset Reliability
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('CREEP')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--color-lacc);">97.8%</div>
+              <div class="kpi-stat-sub">24 Target Olefins Furnaces</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-petro2);">
+              <div class="kpi-stat-label">
+                Overall Availability
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('CPR')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--color-petro2);">98.6%</div>
+              <div class="kpi-stat-sub">Site-wide ethylene production</div>
+            </div>
+          </div>
+
+          <!-- EXECUTIVE DIRECTIVES & PRESCRIPTIONS -->
+          <div class="prescriptions-container">
+            <div class="prescriptions-header">
+              <div class="prescriptions-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Executive Directives & Priority Prescriptions
+              </div>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">3 Active Strategic Recommendations</span>
+            </div>
+            <div id="execPrescriptionsList"></div>
+          </div>
+
+          <!-- CHARTS & SITE BREAKDOWN GRID -->
+          <div class="grid-2">
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Opportunity Breakup by Westlake Target Site (MM$)</div>
+                  <div class="card-subtitle">Realizable financial upside split across Process Efficiency vs AMH Maintenance</div>
+                </div>
+              </div>
+              <div style="height: 280px; position: relative;">
+                <canvas id="chartSiteOpportunity"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Process vs Asset Opportunity Vectors (MM$)</div>
+                  <div class="card-subtitle">Categorization of underlying economic drivers</div>
+                </div>
+              </div>
+              <div style="height: 280px; position: relative;">
+                <canvas id="chartOpportunityDrivers"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- SITES PERFORMANCE MATRIX -->
+          <div class="glass-card">
+            <div class="card-header">
+              <div class="card-title">Westlake Multi-Site Performance Matrix</div>
+              <div class="card-subtitle">Click any site row to filter fleet view or drill into asset-level data</div>
+            </div>
+            <div class="data-table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Site Name</th>
+                    <th>Location</th>
+                    <th>Furnace Fleet</th>
+                    <th>Thermal Eff %</th>
+                    <th>Specific Energy</th>
+                    <th>Ethylene Yield</th>
+                    <th>Process Opp (MM$/yr)</th>
+                    <th>Asset Opp (MM$/yr)</th>
+                    <th>Total Opp (MM$/yr)</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="siteMatrixTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================================
+             MODULE 1: PROCESS & ENERGY EFFICIENCY HUB
+             =================================================================== -->
+        <section id="viewMod1" class="view-section" style="display:none;">
+          
+          <div class="hero-opportunity-banner" style="grid-template-columns: 1fr auto; padding: 1.5rem 2rem;">
+            <div>
+              <div class="opp-hero-title">Module 1: Process & Energy Improvement Hub</div>
+              <div class="opp-hero-value" style="font-size:2.5rem;">$3.12 MM / yr Realizable Opportunity</div>
+              <div class="opp-hero-subtitle">Real-time kinetic severity models, TMT hot-spot prevention, decoke CPR delta-P kinetics (zero CO/CO2), and virtual soft sensors.</div>
+            </div>
+            <div>
+              <button class="btn-pitch" onclick="window.app.switchModule('exec', 'enterprise')" style="background:rgba(255,255,255,0.1); color:var(--text-primary); border:1px solid var(--border-color);">
+                ◄ Executive Overview
+              </button>
+            </div>
+          </div>
+
+          <!-- PROCESS REFERENCE KPIS -->
+          <div class="kpi-banner-grid">
+            <div class="kpi-stat-card" style="--card-border-color: var(--accent-orange);">
+              <div class="kpi-stat-label">
+                Process Efficiency
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('COT')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--accent-orange);">99.1%</div>
+              <div class="kpi-stat-sub">Real-time operational optimization</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--accent-emerald);">
+              <div class="kpi-stat-label">
+                Predicted Production Opportunity
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('COT')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--accent-emerald);">27.9 MT / day</div>
+              <div class="kpi-stat-sub">High-margin monomer recovery</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-lacc);">
+              <div class="kpi-stat-label">
+                Thermal Efficiency
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('TMT')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--color-lacc);">92.8%</div>
+              <div class="kpi-stat-sub">Avg fleet firebox balance</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-petro2);">
+              <div class="kpi-stat-label">
+                Predicted CO2 Reduction Opp
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('ECI')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--color-petro2);">41.2 MT / day</div>
+              <div class="kpi-stat-sub">Energy efficiency footprint</div>
+            </div>
+          </div>
+
+          <!-- MODULE 1 PRESCRIPTIONS -->
+          <div class="prescriptions-container">
+            <div class="prescriptions-header">
+              <div class="prescriptions-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line></svg>
+                Module 1: Real-Time Process Prescriptions
+              </div>
+            </div>
+            <div id="module1PrescriptionsList"></div>
+          </div>
+
+          <!-- FLEET RANKING TABLE -->
+          <div class="glass-card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Westlake Furnace Fleet Operational Ranking</div>
+                <div class="card-subtitle">Real-time multi-objective ranking sorted by efficiency and realizable daily opportunity</div>
+              </div>
+            </div>
+            <div class="data-table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Furnace Asset</th>
+                    <th>Site</th>
+                    <th>Status</th>
+                    <th>Run Days</th>
+                    <th>Thermal Eff</th>
+                    <th>Specific Energy</th>
+                    <th>Ethylene Yield</th>
+                    <th>Delta-P (CPR) <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('CPR')">i</span></th>
+                    <th>Process Opp (MM$/yr)</th>
+                    <th>Drill-Down</th>
+                  </tr>
+                </thead>
+                <tbody id="fleetRankingTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SIMULATOR & SOFT SENSORS -->
+          <div class="grid-2">
+            
+            <!-- WHAT-IF OPERATING ENVELOPE SIMULATOR -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">What-If Operating Envelope Simulator</div>
+                  <div class="card-subtitle">Adjust parameters to predict conversion yields & financial opportunity in real-time</div>
+                </div>
+              </div>
+
+              <div class="simulator-control-group">
+                <div class="simulator-label-row">
+                  <span>Furnace Feed Rate (MT/hr)</span>
+                  <span id="simFeedVal" style="color:var(--accent-orange); font-weight:700;">28.5 MT/hr</span>
+                </div>
+                <input type="range" min="20" max="36" step="0.5" value="28.5" class="simulator-slider" id="simFeedSlider" oninput="window.app.runSimulator()">
+              </div>
+
+              <div class="simulator-control-group">
+                <div class="simulator-label-row">
+                  <span>Coil Outlet Temperature - COT (°C) <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('COT')">i</span></span>
+                  <span id="simCotVal" style="color:var(--accent-orange); font-weight:700;">842 °C</span>
+                </div>
+                <input type="range" min="810" max="865" step="1" value="842" class="simulator-slider" id="simCotSlider" oninput="window.app.runSimulator()">
+              </div>
+
+              <div class="simulator-control-group">
+                <div class="simulator-label-row">
+                  <span>Steam-to-Hydrocarbon Ratio (SHC) <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('SHC')">i</span></span>
+                  <span id="simShcVal" style="color:var(--accent-orange); font-weight:700;">0.45</span>
+                </div>
+                <input type="range" min="0.35" max="0.55" step="0.01" value="0.45" class="simulator-slider" id="simShcSlider" oninput="window.app.runSimulator()">
+              </div>
+
+              <div style="background:var(--bg-primary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1rem; margin-top:1.25rem;">
+                <div style="font-size:0.8rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700; margin-bottom:0.75rem;">Model Output Predictions</div>
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; text-align:center;">
+                  <div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Ethylene Yield</div>
+                    <div id="simOutEth" style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--accent-emerald);">34.8 wt%</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Specific Energy</div>
+                    <div id="simOutNrg" style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--accent-orange);">13.3 MMBtu</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Realizable Opp</div>
+                    <div id="simOutOpp" style="font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--accent-amber);">$0.23 MM / yr</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SOFT SENSORS -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    Virtual Soft Sensors vs Physical GC Delay
+                    <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('SOFTSENSOR')">i</span>
+                  </div>
+                  <div class="card-subtitle">Instant effluent quality feed forward loop bypassing 20-min lab delay</div>
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-primary); padding:0.75rem 1rem; border-radius:var(--radius-md); margin-bottom:1rem;">
+                <span style="font-size:0.85rem; font-weight:600;">Soft Sensor Feedback Loop:</span>
+                <span style="color:var(--accent-emerald); font-weight:700; font-size:0.85rem;">ACTIVE (0 sec delay)</span>
+              </div>
+
+              <div style="height: 220px; position: relative;">
+                <canvas id="chartSoftSensors"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================================
+             MODULE 2: ASSET METRIC HUB (AMH) & EXPANDED SITE BREAKDOWN
+             =================================================================== -->
+        <section id="viewMod2" class="view-section" style="display:none;">
+          
+          <div class="hero-opportunity-banner" style="grid-template-columns: 1fr auto; padding: 1.5rem 2rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(249, 115, 22, 0.1)); border-color: rgba(16, 185, 129, 0.35);">
+            <div>
+              <div class="opp-hero-title" style="color:var(--accent-emerald);">Module 2: Advanced Asset Metric Hub (AMH)</div>
+              <div class="opp-hero-value" style="font-size:2.5rem;">$2.12 MM / yr Realizable Opportunity</div>
+              <div class="opp-hero-subtitle">Automated SAP work-order text log categorizer, unplanned break-in penalty isolation, labor mix allocation, and Solomon furnace metric benchmarking.</div>
+            </div>
+            <div>
+              <button class="btn-pitch" onclick="window.app.switchModule('exec', 'enterprise')" style="background:rgba(255,255,255,0.1); color:var(--text-primary); border:1px solid var(--border-color);">
+                ◄ Executive Overview
+              </button>
+            </div>
+          </div>
+
+          <!-- AMH REFERENCE KPIS -->
+          <div class="kpi-banner-grid">
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-calvert);">
+              <div class="kpi-stat-label">Total Plants & Assets</div>
+              <div class="kpi-stat-val" style="color: var(--color-calvert);">4 Sites / 24 Assets</div>
+              <div class="kpi-stat-sub">Calvert, LACC, Petro 1 & Petro 2</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-lacc);">
+              <div class="kpi-stat-label">
+                Maintenance Cost Effectiveness
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('ECI')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--color-lacc);">94.2%</div>
+              <div class="kpi-stat-sub">Predictive SAP classification</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-petro1);">
+              <div class="kpi-stat-label">
+                Critical Asset Reliability
+                <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('CREEP')">i</span>
+              </div>
+              <div class="kpi-stat-val" style="color: var(--color-petro1);">97.8%</div>
+              <div class="kpi-stat-sub">High critical fleet uptime</div>
+            </div>
+            <div class="kpi-stat-card" style="--card-border-color: var(--color-petro2);">
+              <div class="kpi-stat-label">Overall Availability</div>
+              <div class="kpi-stat-val" style="color: var(--color-petro2);">98.6%</div>
+              <div class="kpi-stat-sub">YTD Maintenance Excellence</div>
+            </div>
+          </div>
+
+          <!-- EXPANDED AMH SITE BREAKDOWN VISUALS & COMPARISON CARDS -->
+          <div class="grid-2">
+            <!-- SITE COMPONENT SPEND BREAKDOWN BAR CHART -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">AMH Site Component Maintenance Spend ($ MM/yr)</div>
+                  <div class="card-subtitle">Itemized spend comparison across Convection, Radiant Coils, Refractory & Burners per site</div>
+                </div>
+              </div>
+              <div style="height: 280px; position: relative;">
+                <canvas id="chartAmhSiteSpend"></canvas>
+              </div>
+            </div>
+
+            <!-- SITE RELIABILITY & MTBF COMPARISON CHART -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Site Reliability & MTBF Comparison (Days)</div>
+                  <div class="card-subtitle">Mean Time Between Failures (MTBF) vs Mean Time To Repair (MTTR in Hours)</div>
+                </div>
+              </div>
+              <div style="height: 280px; position: relative;">
+                <canvas id="chartAmhSiteReliability"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODULE 2 PRESCRIPTIONS -->
+          <div class="prescriptions-container" style="border-color: rgba(16, 185, 129, 0.4);">
+            <div class="prescriptions-header">
+              <div class="prescriptions-title" style="color:var(--accent-emerald);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Module 2: Asset Maintenance Prescriptions
+              </div>
+            </div>
+            <div id="module2PrescriptionsList"></div>
+          </div>
+
+          <!-- SAP CATEGORIES & LABOR MIX -->
+          <div class="grid-2">
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">SAP Maintenance Spend Categorization</div>
+                  <div class="card-subtitle">Predictive vs Reactive vs Emergency Spend Split across Westlake sites</div>
+                </div>
+              </div>
+              <div style="height: 280px; position: relative;">
+                <canvas id="chartSapCategories"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Labor Mix Allocation Splitter</div>
+                  <div class="card-subtitle">Westlake Employees vs Embedded Contractors vs Specialized Contractors</div>
+                </div>
+              </div>
+              <div style="height: 280px; position: relative;">
+                <canvas id="chartLaborMix"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- AMH MULTI-SITE MAINTENANCE MATRIX TABLE -->
+          <div class="glass-card" style="margin-bottom:2rem;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Westlake Multi-Site AMH Maintenance Performance Matrix</div>
+                <div class="card-subtitle">Detailed breakdown of SAP Work Orders, Spend/Day, MTBF, MTTR, and Cost/Ton Ethylene</div>
+              </div>
+            </div>
+            <div class="data-table-container">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Site Name</th>
+                    <th>Annual Maint Spend</th>
+                    <th>Spend / Operating Day</th>
+                    <th>Cost / MT Ethylene</th>
+                    <th>Work Orders Count</th>
+                    <th>Unplanned Break-Ins</th>
+                    <th>Predictive Ratio %</th>
+                    <th>MTBF (Days)</th>
+                    <th>MTTR (Hours)</th>
+                    <th>Labor Mix (Emp / Emb / Spec)</th>
+                  </tr>
+                </thead>
+                <tbody id="amhSiteMatrixTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SOLOMON BENCHMARK ENGINE (COLOR CODED BY SITE) -->
+          <div class="glass-card" style="margin-bottom:2rem;">
+            <div class="card-header">
+              <div>
+                <div class="card-title">
+                  Solomon Furnace Metrics Benchmarking Map (Site Color Segregated)
+                  <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('ECI')">i</span>
+                </div>
+                <div class="card-subtitle">Coil Age (Years) vs Total Maintenance Cost ($/Day) color-coded by site</div>
+              </div>
+            </div>
+            <div style="height: 340px; position: relative;">
+              <canvas id="chartSolomonBenchmark"></canvas>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ===================================================================
+             ASSET DEEP-DIVE VIEW (Delineated Process vs AMH Perspective)
+             =================================================================== -->
+        <section id="viewAsset" class="view-section" style="display:none;">
+          
+          <div style="display:flex; align-items:center; justify-content:space-between; background:var(--bg-card); border:1px solid var(--border-color); padding:1.25rem 1.75rem; border-radius:var(--radius-lg); margin-bottom:1.5rem;">
+            <div style="display:flex; align-items:center; gap:1.25rem;">
+              <div style="font-size:0.85rem; color:var(--text-secondary); font-weight:600;">Select Westlake Asset:</div>
+              <select id="assetSelectDropdown" class="site-selector" style="font-size:1rem; padding:0.6rem 1.2rem; min-width:280px;" onchange="window.app.handleAssetSelect(this.value)">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <!-- ASSET PERSPECTIVE TOGGLE BUTTONS -->
+            <div style="display:flex; align-items:center; gap:0.5rem; background:var(--bg-primary); padding:0.3rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+              <button id="assetTabProcess" class="scope-btn active" onclick="window.app.switchAssetPerspective('process')">
+                ⚡ Process Efficiency View
+              </button>
+              <button id="assetTabAmh" class="scope-btn" onclick="window.app.switchAssetPerspective('amh')">
+                🛠️ AMH Maintenance View
+              </button>
+            </div>
+          </div>
+
+          <!-- ASSET HERO METADATA CONTAINER -->
+          <div id="assetHeroContainer"></div>
+
+          <!-- PERSPECTIVE 1: PROCESS EFFICIENCY ASSET DEEP DIVE -->
+          <div id="assetPerspectiveProcessContainer">
+            
+            <!-- PROCESS PRESCRIPTIONS -->
+            <div class="prescriptions-container" style="border-color: var(--accent-orange);">
+              <div class="prescriptions-header">
+                <div class="prescriptions-title" style="color:var(--accent-orange);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  Process Efficiency Directives for Selected Furnace
+                </div>
+              </div>
+              <div id="assetProcessPrescriptionsList"></div>
+            </div>
+
+            <!-- INTERACTIVE ETHYLENE FURNACE SCHEMATIC INFOGRAPHIC -->
+            <div class="glass-card" style="margin-bottom:1.5rem;">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    Interactive Ethylene Cracking Furnace Schematic Diagram
+                    <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('TMT')">i</span>
+                  </div>
+                  <div class="card-subtitle">Hover over any pass node to view real-time skin temperature & hot-spot alerts</div>
+                </div>
+                <span style="font-size:0.75rem; color:var(--accent-orange); font-weight:700;">Hover over P1-P8 for live telemetry</span>
+              </div>
+
+              <div class="furnace-schematic-box">
+                <svg class="schematic-svg-container" viewBox="0 0 800 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Furnace Outer Shell -->
+                  <rect x="150" y="40" width="500" height="200" rx="12" fill="#1e293b" stroke="#334155" stroke-width="3"/>
+                  <!-- Flue Gas Stack -->
+                  <rect x="360" y="10" width="80" height="30" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+                  <!-- Convection Section (Top) -->
+                  <rect x="200" y="55" width="400" height="45" rx="6" fill="#0f172a" stroke="#FF6B00" stroke-width="1.5" stroke-dasharray="4 4"/>
+                  <text x="400" y="82" fill="#94a3b8" font-size="12" font-weight="700" text-anchor="middle">CONVECTION SECTION (Feed Preheat & Dilution Steam)</text>
+                  
+                  <!-- Radiant Section Firebox (Bottom) -->
+                  <rect x="200" y="115" width="400" height="110" rx="6" fill="#0b0f19" stroke="#f59e0b" stroke-width="2"/>
+                  <text x="400" y="132" fill="#f59e0b" font-size="11" font-weight="700" text-anchor="middle">RADIANT FIREBOX (Radiant Coils & Burner Walls)</text>
+
+                  <!-- 8 Radiant Pass Lines & Hover Pins -->
+                  <path d="M 230 150 L 230 205 M 280 150 L 280 205 M 330 150 L 330 205 M 380 150 L 380 205 M 430 150 L 430 205 M 480 150 L 480 205 M 530 150 L 530 205 M 580 150 L 580 205" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+
+                  <!-- Pass Sensor Pins (Hoverable) -->
+                  <circle cx="230" cy="178" r="12" fill="#10B981" class="schematic-pass-pin" data-pass="Pass 1" data-temp="985°C" data-status="Normal" data-rec="Skin temperature optimal. No action required."/>
+                  <text x="230" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P1</text>
+
+                  <circle cx="280" cy="178" r="12" fill="#10B981" class="schematic-pass-pin" data-pass="Pass 2" data-temp="992°C" data-status="Normal" data-rec="Operating cleanly."/>
+                  <text x="280" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P2</text>
+
+                  <circle cx="330" cy="178" r="12" fill="#f59e0b" class="schematic-pass-pin" data-pass="Pass 3" data-temp="1005°C" data-status="Warning" data-rec="Elevated skin temperature. Monitor draft."/>
+                  <text x="330" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P3</text>
+
+                  <!-- Pass 4 Hot Spot (Pulsing Red) -->
+                  <circle cx="380" cy="178" r="14" fill="#f43f5e" class="schematic-pass-pin" data-pass="Pass 4" data-temp="1045°C" data-status="CRITICAL HOT-SPOT" data-rec="CRITICAL: Pass 4 reading 1045°C! Trim Burner #4 fuel valve by -3.5% immediately.">
+                    <animate attributeName="r" values="12;16;12" dur="1.2s" repeatCount="indefinite"/>
+                  </circle>
+                  <text x="380" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P4</text>
+
+                  <circle cx="430" cy="178" r="12" fill="#f59e0b" class="schematic-pass-pin" data-pass="Pass 5" data-temp="1008°C" data-status="Warning" data-rec="Elevated skin temperature."/>
+                  <text x="430" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P5</text>
+
+                  <circle cx="480" cy="178" r="12" fill="#10B981" class="schematic-pass-pin" data-pass="Pass 6" data-temp="995°C" data-status="Normal" data-rec="Operating cleanly."/>
+                  <text x="480" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P6</text>
+
+                  <circle cx="530" cy="178" r="12" fill="#10B981" class="schematic-pass-pin" data-pass="Pass 7" data-temp="988°C" data-status="Normal" data-rec="Operating cleanly."/>
+                  <text x="530" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P7</text>
+
+                  <circle cx="580" cy="178" r="12" fill="#10B981" class="schematic-pass-pin" data-pass="Pass 8" data-temp="982°C" data-status="Normal" data-rec="Operating cleanly."/>
+                  <text x="580" y="182" fill="#fff" font-size="10" font-weight="800" text-anchor="middle" pointer-events="none">P8</text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- COIL-LEVEL TMT HEATMAP -->
+            <div class="glass-card" style="margin-bottom:1.5rem;">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    Coil-Level Tube Metal Temperature (TMT) Heatmap
+                    <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('TMT')">i</span>
+                  </div>
+                  <div class="card-subtitle">8-Pass circumferential thermal profile and localized hot-spot detection</div>
+                </div>
+                <span class="status-pill status-online"><span class="status-dot"></span>Real-Time Telemetry</span>
+              </div>
+              <div id="tmtHeatmapGrid" class="tmt-heatmap-grid"></div>
+            </div>
+
+          </div>
+
+          <!-- PERSPECTIVE 2: AMH MAINTENANCE ASSET DEEP DIVE -->
+          <div id="assetPerspectiveAmhContainer" style="display:none;">
+            
+            <!-- AMH MAINTENANCE PRESCRIPTIONS -->
+            <div class="prescriptions-container" style="border-color: var(--accent-emerald);">
+              <div class="prescriptions-header">
+                <div class="prescriptions-title" style="color:var(--accent-emerald);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  AMH Asset Maintenance & Reliability Prescriptions
+                </div>
+              </div>
+              <div id="assetAmhPrescriptionsList"></div>
+            </div>
+
+            <!-- AMH MAINTENANCE KPIS & COMPONENT SCOPE BREAKDOWN -->
+            <div class="grid-2" style="margin-bottom:1.5rem;">
+              <div class="glass-card">
+                <div class="card-header">
+                  <div class="card-title">Component Scope Spend Allocation (MM$)</div>
+                  <div class="card-subtitle">Itemized spend breakdown for Convection, Radiant Coils, Refractory & Burners</div>
+                </div>
+                <div id="assetComponentScopeGrid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:1rem; margin-top:0.5rem;"></div>
+              </div>
+
+              <div class="glass-card">
+                <div class="card-header">
+                  <div class="card-title">
+                    Asset Reliability & Creep Damage Index
+                    <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('CREEP')">i</span>
+                  </div>
+                  <div class="card-subtitle">Lifetime thermal stress and failure risk assessment</div>
+                </div>
+                <div id="assetReliabilityCard" style="padding:0.5rem 0;"></div>
+              </div>
+            </div>
+
+            <!-- SAP WORK ORDERS TABLE FOR ASSET -->
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">
+                    SAP Maintenance Work Orders & Cost Log
+                    <span class="info-tooltip-btn" onclick="window.app.openDomainGlossary('ECI')">i</span>
+                  </div>
+                  <div class="card-subtitle">Parsed SAP maintenance history and labor mix breakdown for selected furnace</div>
+                </div>
+              </div>
+              <div class="data-table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Category</th>
+                      <th>Type</th>
+                      <th>Component Scope</th>
+                      <th>Cost (MM$)</th>
+                      <th>Labor Mix</th>
+                      <th>Work Description</th>
+                    </tr>
+                  </thead>
+                  <tbody id="assetWorkOrdersTbody"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+    <!-- TMT FLOATING HOVER TOOLTIP -->
+    <div id="tmtHoverTooltip">
+      <div id="tmtTooltipPass" style="font-weight:700; color:var(--accent-orange); margin-bottom:0.2rem;">Pass 4</div>
+      <div id="tmtTooltipTemp" style="font-family:var(--font-display); font-size:1.2rem; font-weight:800; color:#fff;">1045 °C</div>
+      <div id="tmtTooltipStatus" style="font-size:0.7rem; font-weight:700; color:var(--accent-rose); margin-top:0.2rem;">CRITICAL HOT-SPOT</div>
+      <div id="tmtTooltipRec" style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem; line-height:1.3;">Trim Burner #4 fuel gas valve position.</div>
+    </div>
+
+    <!-- DOMAIN GLOSSARY INFO MODAL -->
+    <div id="glossaryModal" class="modal-overlay">
+      <div class="modal-container" style="max-width: 650px;">
+        <button class="modal-close-btn" onclick="window.app.closeDomainGlossary()">✕</button>
+
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
+          <div style="width:36px; height:36px; border-radius:50%; background:rgba(255,107,0,0.2); border:1px solid var(--accent-orange); display:flex; align-items:center; justify-content:center; color:var(--accent-orange); font-weight:800; font-size:1.1rem;">i</div>
+          <div id="glossaryTitle" style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--text-primary);">Domain Metric Explanation</div>
+        </div>
+
+        <div style="background:var(--bg-primary); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-bottom:1rem;">
+          <div style="font-size:0.75rem; color:var(--accent-orange); text-transform:uppercase; font-weight:700;">What Is It?</div>
+          <div id="glossaryWhat" style="font-size:0.9rem; color:var(--text-primary); margin-top:0.25rem; line-height:1.5;"></div>
+        </div>
+
+        <div style="background:var(--bg-primary); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-bottom:1rem;">
+          <div style="font-size:0.75rem; color:var(--accent-cyan); text-transform:uppercase; font-weight:700;">Ingenero Physics-AI Model</div>
+          <div id="glossaryPhysics" style="font-size:0.9rem; color:var(--text-primary); margin-top:0.25rem; line-height:1.5;"></div>
+        </div>
+
+        <div style="background:rgba(16,185,129,0.12); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--accent-emerald);">
+          <div style="font-size:0.75rem; color:var(--accent-emerald); text-transform:uppercase; font-weight:700;">Financial & Operational Impact</div>
+          <div id="glossaryImpact" style="font-size:0.95rem; font-weight:700; color:var(--text-primary); margin-top:0.25rem; line-height:1.5;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALES PITCH PROPOSAL MODAL -->
+    <div id="pitchModal" class="modal-overlay">
+      <div class="modal-container">
+        <button class="modal-close-btn" onclick="window.app.closePitchModal()">✕</button>
+
+        <div style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          Digital Solution Proposal for Westlake Corporation
+        </div>
+        <div style="font-size:0.9rem; color:var(--accent-orange); font-weight:600; margin-bottom:1.5rem;">
+          Enterprise Process Efficiency (Module 1) & Advanced Asset Metric Hub (Module 2)
+        </div>
+
+        <div style="background:rgba(255,107,0,0.12); border:1px solid var(--accent-orange); border-radius:var(--radius-md); padding:1.25rem; margin-bottom:1.5rem;">
+          <div style="font-size:0.85rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Executive Value Proposition</div>
+          <div style="font-size:1.1rem; color:var(--text-primary); font-weight:700; margin-top:0.3rem;">
+            Estimated Tangible Benefits: <span style="color:var(--accent-emerald);">$2.5M – $3.6M per year</span> per representative asset configuration ($5.0M – $6.0M annual site-wide ceiling).
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:1.5rem;">
+          <div style="background:var(--bg-primary); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:var(--accent-orange); margin-bottom:0.5rem;">Module 1: Process & Energy Improvement</div>
+            <ul style="font-size:0.85rem; color:var(--text-secondary); padding-left:1.2rem; line-height:1.6;">
+              <li>Predictive tube metal temperature (TMT) hot-spot mitigation</li>
+              <li>Delta-P / CPR kinetics decoke optimization (zero CO/CO2 dependence)</li>
+              <li>Kinetic yield severity modeling & feed-forward soft sensors</li>
+              <li>Multi-objective load swing optimization to cleaner furnaces</li>
+            </ul>
+          </div>
+
+          <div style="background:var(--bg-primary); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:var(--accent-emerald); margin-bottom:0.5rem;">Module 2: Advanced Asset Metric Hub (AMH)</div>
+            <ul style="font-size:0.85rem; color:var(--text-secondary); padding-left:1.2rem; line-height:1.6;">
+              <li>Automated SAP work-order text classification</li>
+              <li>Predictive vs Reactive vs Emergency spend breakdown</li>
+              <li>Unplanned break-in penalty quantification</li>
+              <li>Westlake Employee vs Embedded Contractor labor optimization</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="font-size:0.95rem; font-weight:700; color:var(--text-primary); margin-bottom:0.75rem;">24-Week Engineering Deployment Roadmap (8,750 Man-Hours)</div>
+        <div class="data-table-container">
+          <table class="custom-table" style="font-size:0.8rem;">
+            <thead>
+              <tr>
+                <th>Phase</th>
+                <th>Focus Area</th>
+                <th>Key Engineering Deliverables</th>
+                <th>Timeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color:var(--accent-orange); font-weight:700;">Phase 1</td>
+                <td>Data Connection & Ingestion</td>
+                <td>OPC-UA / PI Web API extraction setup for Westlake target sites.</td>
+                <td>Weeks 01 – 04</td>
+              </tr>
+              <tr>
+                <td style="color:var(--accent-orange); font-weight:700;">Phase 2</td>
+                <td>Model Design & Configuration</td>
+                <td>Calibrate physical-chemical coking profiles & SAP classification rules.</td>
+                <td>Weeks 05 – 12</td>
+              </tr>
+              <tr>
+                <td style="color:var(--accent-orange); font-weight:700;">Phase 3</td>
+                <td>Baseline Site Validation</td>
+                <td>Audit predictive accuracy against historical plant data & Solomon metrics.</td>
+                <td>Weeks 13 – 16</td>
+              </tr>
+              <tr>
+                <td style="color:var(--accent-orange); font-weight:700;">Phase 4</td>
+                <td>Multi-Site Scale & Deployment</td>
+                <td>Clone models across Calvert, LACC, Petro 1, and Petro 2 fleets.</td>
+                <td>Weeks 17 – 22</td>
+              </tr>
+              <tr>
+                <td style="color:var(--accent-orange); font-weight:700;">Phase 5</td>
+                <td>Handover & Operational Training</td>
+                <td>Deliver complete Functional Design Specifications (FDS) & training.</td>
+                <td>Weeks 23 – 24</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI DIAGNOSTIC ASSISTANT WIDGET WITH API KEY DRAWER & SUGGESTION CHIPS -->
+    <div class="ai-agent-widget">
+      <button class="ai-fab-btn" onclick="window.app.toggleAiChat()" title="AI Diagnostic Assistant">
+        ⚡
+      </button>
+
+      <div id="aiChatWindow" class="ai-chat-window">
+        <!-- CHAT HEADER WITH API SETTINGS TOGGLE -->
+        <div class="ai-chat-header">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="color:var(--accent-orange);">⚡ Ingenero AI</span>
+            <span style="font-size:0.75rem; color:var(--text-secondary);">(Furnace & AMH Diagnostic)</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <button style="background:rgba(255,107,0,0.15); border:1px solid var(--accent-orange); color:var(--accent-orange); font-size:0.7rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:var(--radius-sm); cursor:pointer;" onclick="window.app.toggleApiKeyDrawer()">🔑 API Key</button>
+            <button style="background:none; border:none; color:var(--text-primary); cursor:pointer;" onclick="window.app.toggleAiChat()">✕</button>
+          </div>
+        </div>
+
+        <!-- API KEY SETTINGS DRAWER WITH EXPLICIT MODEL OPTIONS -->
+        <div id="aiApiDrawer" class="ai-api-drawer">
+          <div style="font-size:0.75rem; font-weight:700; color:var(--accent-orange); margin-bottom:0.4rem;">Select Model & API Key Provider:</div>
+          <div style="display:flex; gap:0.5rem; margin-bottom:0.4rem;">
+            <select id="aiProviderSelect" class="site-selector" style="font-size:0.75rem; padding:0.3.rem 0.5rem; width:100%;">
+              <option value="gemini-auto">Google Gemini (Auto Fallback 2.0 / 1.5 / Pro)</option>
+              <option value="gemini-2.0-flash">Google Gemini 2.0 Flash</option>
+              <option value="gemini-1.5-flash">Google Gemini 1.5 Flash</option>
+              <option value="gemini-1.5-pro">Google Gemini 1.5 Pro</option>
+              <option value="gemini-pro">Google Gemini Pro</option>
+              <option value="openai-gpt4o-mini">OpenAI GPT-4o-mini</option>
+              <option value="openai-gpt4o">OpenAI GPT-4o</option>
+            </select>
+          </div>
+          <div style="display:flex; gap:0.4rem;">
+            <input type="password" id="aiApiKeyInput" class="ai-chat-input" placeholder="Paste API Key (AIza... / sk-...)" style="font-size:0.75rem;">
+            <button class="ai-chat-send" style="font-size:0.75rem; padding:0.3rem 0.6rem;" onclick="window.app.saveApiKey()">Save Key</button>
+          </div>
+          <div id="aiApiKeyStatus" style="font-size:0.68rem; color:var(--text-muted); margin-top:0.3rem;">Using Ingenero Built-In Physics Engine</div>
+        </div>
+
+        <!-- QUICK SUGGESTION CHIPS -->
+        <div class="ai-chips-container">
+          <button class="ai-chip-btn" onclick="window.app.sendChipQuestion('🔥 Check Hot-Spots')">🔥 Hot-Spots</button>
+          <button class="ai-chip-btn" onclick="window.app.sendChipQuestion('📉 CPR Decoke Kinetics')">📉 CPR Decoke</button>
+          <button class="ai-chip-btn" onclick="window.app.sendChipQuestion('💰 MM$ Opportunity')">💰 Opportunity</button>
+          <button class="ai-chip-btn" onclick="window.app.sendChipQuestion('🛠️ SAP Maintenance')">🛠️ SAP Spend</button>
+          <button class="ai-chip-btn" onclick="window.app.sendChipQuestion('📑 24-Week Roadmap')">📑 Roadmap</button>
+        </div>
+
+        <div id="aiChatMessages" class="ai-chat-messages">
+          <div class="chat-msg agent">
+            Hello! I am your AI Furnace & Asset Diagnostic Assistant. Ask me anything about Westlake's fleet opportunity, coking hotspots, decoke kinetics, or SAP maintenance spend!
+          </div>
+        </div>
+
+        <div class="ai-chat-input-area">
+          <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="Type a diagnostic question..." onkeypress="if(event.key==='Enter') window.app.sendAiMessage()">
+          <button class="ai-chat-send" onclick="window.app.sendAiMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
