@@ -1,9 +1,4 @@
-# Render.com Infrastructure as Code Blueprint
-# https://render.com/docs/blueprint-spec
-
 services:
-- type: static
+  - type: static
     name: westlake-enterprise-dashboard
     staticPublishPath: .
-      - key: PORT
-        value: 8080
